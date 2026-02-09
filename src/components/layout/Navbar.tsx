@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Добавлен импорт Image
 import { usePathname } from 'next/navigation';
 import { Gamepad2, User as UserIcon, LogOut, Menu, X } from 'lucide-react'; 
 import { useAuth } from '@/features/auth/AuthContext';
@@ -22,6 +23,11 @@ export function Navbar() {
       setIsMobileMenuOpen(false); 
   };
 
+  const handleLogout = async () => {
+      setIsMobileMenuOpen(false);
+      await logout();
+  };
+
   const navLinks = [
     { name: 'LIBRARY', href: '/' },
     { name: 'REVIEWS', href: '/profile?tab=reviews' },
@@ -37,6 +43,7 @@ export function Navbar() {
                     <button 
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="p-2 text-neutral-300 hover:text-white transition-colors"
+                        aria-label="Toggle menu"
                     >
                         {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
@@ -46,7 +53,7 @@ export function Navbar() {
                 <div className="hidden md:flex items-center gap-8">
                 {user ? (
                     navLinks.map((link) => {
-                    const isActive = pathname === link.href || (link.href.includes('?') && pathname === link.href.split('?')[0] && window.location.search.includes('tab=reviews'));
+                    const isActive = pathname === link.href || (link.href.includes('?') && pathname === link.href.split('?')[0] && typeof window !== 'undefined' && window.location.search.includes('tab=reviews'));
                     return (
                         <Link
                         key={link.name}
@@ -98,13 +105,19 @@ export function Navbar() {
                             href="/profile"
                             className="flex items-center gap-2 md:gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#D4AF37]/50 rounded-full pl-1 md:pl-2 pr-2 md:pr-4 py-1 transition-all duration-300 hover:scale-105 group"
                         >
-                            <div className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden border border-white/20">
+                            <div className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden border border-white/20 bg-neutral-800">
                                 {user.photoURL ? (
-                                <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
+                                    <Image 
+                                        src={user.photoURL} 
+                                        alt="User" 
+                                        fill 
+                                        className="object-cover"
+                                        sizes="32px"
+                                    />
                                 ) : (
-                                <div className="w-full h-full bg-neutral-800 flex items-center justify-center">
-                                    <UserIcon className="w-4 h-4 text-neutral-400" />
-                                </div>
+                                    <div className="w-full h-full flex items-center justify-center">
+                                        <UserIcon className="w-4 h-4 text-neutral-400" />
+                                    </div>
                                 )}
                             </div>
                             
@@ -120,7 +133,7 @@ export function Navbar() {
                         </Link>
 
                         <button
-                            onClick={() => logout()}
+                            onClick={handleLogout}
                             className="hidden md:block group p-2 rounded-full hover:bg-white/5 transition-colors"
                             title="Logout"
                         >
@@ -128,7 +141,6 @@ export function Navbar() {
                         </button>
                     </div>
                 ) : (
-                    
                     <div className="md:hidden w-8" /> 
                 )}
                 </div>
@@ -160,7 +172,7 @@ export function Navbar() {
                             </div>
                             <div className="h-px bg-white/10 w-full" />
                             <button 
-                                onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                                onClick={handleLogout}
                                 className="flex items-center gap-2 text-red-500 font-bold tracking-widest"
                             >
                                 <LogOut className="w-5 h-5" /> LOGOUT

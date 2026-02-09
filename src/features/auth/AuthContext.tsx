@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
- 
+    // 1. Слушатель авторизации
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (mounted) {
         setUser(user);
@@ -40,7 +40,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
- 
+    // 2. Таймер безопасности (2 секунды)
+    // Если Firebase тупит (медленный интернет), принудительно показываем приложение
     const safetyTimer = setTimeout(() => {
       if (mounted) {
         setLoading((isLoading) => {
@@ -80,7 +81,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const logout = () => signOut(auth);
+  // === ИСПРАВЛЕННАЯ ФУНКЦИЯ ВЫХОДА ===
+  const logout = async () => {
+    try {
+      setLoading(true); // 1. Блокируем UI
+      await signOut(auth); // 2. Ждем Firebase
+      setUser(null); // 3. МГНОВЕННО удаляем пользователя из стейта
+    } catch (error) {
+      console.error("Logout Error:", error);
+    } finally {
+      setLoading(false); // 4. Разблокируем UI
+      // Опционально: перезагрузка страницы для полной очистки кэша
+      // window.location.reload(); 
+    }
+  };
 
   return (
     <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout, loginWithEmail, registerWithEmail }}>

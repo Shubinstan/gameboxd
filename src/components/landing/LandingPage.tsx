@@ -9,17 +9,17 @@ import { PublicGameDetails, LandingGame } from './PublicGameDetails';
 const FALLBACK_GAMES: LandingGame[] = [
   { 
     id: 'f1', title: 'Cyberpunk 2077', 
-    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_720p/co848v.jpg', 
+    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/coaih8.jpg', 
     releaseYear: 2020, developer: 'CD Projekt RED', publisher: 'CDPR', status: 'COMPLETED', rating: 4.5, metacritic: 86, ignRating: '9/10', description: "An open-world, action-adventure RPG set in the dark future of Night City." 
   },
   { 
     id: 'f2', title: 'Alan Wake 2', 
-    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_720p/co660r.jpg', 
+    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co6jar.jpg', 
     releaseYear: 2023, developer: 'Remedy', publisher: 'Epic Games', status: 'PLAYING', rating: 5.0, metacritic: 89, ignRating: '10/10', description: "Saga Anderson arrives to investigate ritualistic murders in Bright Falls." 
   },
   { 
     id: 'f3', title: 'Silent Hill 2', 
-    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_720p/co86c3.jpg', 
+    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/coavaf.jpg', 
     releaseYear: 2024, developer: 'Bloober Team', publisher: 'Konami', status: 'BACKLOG', rating: 4.8, metacritic: 86, ignRating: '9/10', description: "James Sunderland travels to Silent Hill after receiving a letter from his deceased wife." 
   },
   { 
@@ -34,7 +34,7 @@ const FALLBACK_GAMES: LandingGame[] = [
   },
   { 
     id: 'f6', title: 'Resident Evil 4', 
-    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_720p/co670n.jpg', 
+    coverUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co6bo0.jpg', 
     releaseYear: 2023, developer: 'Capcom', publisher: 'Capcom', status: 'COMPLETED', rating: 4.9, metacritic: 93, ignRating: '10/10', description: "Survival is just the beginning. Six years have passed since the biological disaster in Raccoon City." 
   },
 ];
