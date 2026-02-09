@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Добавлен импорт Image
+import Image from 'next/image'; 
 import { usePathname } from 'next/navigation';
 import { Gamepad2, User as UserIcon, LogOut, Menu, X } from 'lucide-react'; 
 import { useAuth } from '@/features/auth/AuthContext';
