@@ -3,16 +3,23 @@ export type GameStatus = 'PLAYING' | 'BACKLOG' | 'COMPLETED' | 'DROPPED';
 export interface Game {
   id: string;
   title: string;
-  releaseYear: number;
   coverUrl: string;
-  rating: number;
-  status: GameStatus;
-  addedAt: number;
   
-  platform: string; 
-  playedOn?: string; 
-  userReview?: string;
+  
+  releaseYear?: number;
+  rating?: number;
+  status?: GameStatus;
+  addedAt?: number;
+  
+  
+  summary?: string;      
+  description?: string;  
+  developer?: string;
+  publisher?: string;
+  
+
+  platform?: string;
+  playedOn?: string;
   completedAt?: string;
-  
-  developer?: string; 
+  userReview?: string;
 }

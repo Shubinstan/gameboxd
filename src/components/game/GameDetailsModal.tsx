@@ -130,7 +130,7 @@ export function GameDetailsModal({ game, isOpen, onClose, onUpdate, onDelete }: 
                         Synopsis
                     </h3>
                     <p className="text-neutral-300 text-sm leading-relaxed font-sans whitespace-pre-line">
-                        {game.summary || "No description available."}
+                        {game.description || game.summary || "No description available."}
                     </p>
                 </div>
 
