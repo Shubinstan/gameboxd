@@ -48,7 +48,7 @@ export function GameCard({ game, disabled = false, index }: GameCardProps) {
     cardRef.current.style.setProperty('--my', `50%`);
   };
 
-  const statusInfo = statusConfig[game.status] || statusConfig['DROPPED'] || statusConfig['BACKLOG'];
+  const statusInfo = statusConfig[game.status || 'BACKLOG'];
 
   // LCP Optimization: 
   const isPriority = index !== undefined && index < 4;
@@ -99,10 +99,10 @@ export function GameCard({ game, disabled = false, index }: GameCardProps) {
           style={{ background: 'radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,0.3) 0%, transparent 60%)' }} />
 
         {/* === RATING BADGE === */}
-        {game.rating > 0 && (
+        {(game.rating || 0) > 0 && (
           <div className="absolute top-2 left-2 z-20 flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-sm" style={{ transform: 'translateZ(40px)' }}>
             <Star className="w-3 h-3 text-[#D4AF37] fill-transparent stroke-[2px]" />
-            <span className="text-[10px] font-bold text-white">{game.rating.toFixed(1)}</span>
+            <span className="text-[10px] font-bold text-white">{(game.rating || 0).toFixed(1)}</span>
           </div>
         )}
 
