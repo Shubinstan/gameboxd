@@ -91,7 +91,7 @@ export function PublicGameDetails({ game, isOpen, onClose }: PublicGameDetailsPr
                     <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest mb-1">User Score</span>
                     <div className="flex items-center gap-1 text-[#D4AF37]">
                         <Star className="w-4 h-4 fill-current" />
-                        <span className="font-bold text-lg">{game.rating > 0 ? game.rating : 'TBD'}</span>
+                        <span className="font-bold text-lg">{(game.rating || 0) > 0 ? game.rating : 'TBD'}</span>
                     </div>
                 </div>
             </div>

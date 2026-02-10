@@ -25,8 +25,8 @@ export function LibraryGrid({ initialGames, onAddGameClick, onGameClick }: Libra
     }
     result.sort((a, b) => {
       switch (sortBy) {
-        case 'RATING': return b.rating - a.rating;
-        case 'DATE': return b.addedAt - a.addedAt;
+        case 'RATING': return (b.rating || 0) - (a.rating || 0);
+        case 'DATE': return (b.addedAt || 0) - (a.addedAt || 0);
         case 'ALPHABETICAL': return a.title.localeCompare(b.title);
         default: return 0;
       }

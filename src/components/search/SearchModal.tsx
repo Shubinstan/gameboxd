@@ -127,7 +127,7 @@ export function SearchModal({ isOpen, onClose, onAddGame }: SearchModalProps) {
                         <div className="flex flex-wrap items-center gap-3 text-neutral-400 mb-6 font-mono text-xs">
                             <span className="bg-white/10 px-2 py-1 rounded text-white">{previewGame.releaseYear}</span>
                             <span>{previewGame.platform}</span>
-                            {previewGame.rating > 0 && (
+                            {(previewGame.rating || 0) > 0 && (
                                 <span className="flex items-center gap-1 text-[#4ade80]">
                                     <Gamepad2 className="w-4 h-4" /> {previewGame.rating}
                                 </span>

@@ -174,7 +174,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
                             )}
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                             
-                            {game.rating > 0 && (
+                            {(game.rating || 0) > 0 && (
                                 <div className="absolute top-2 right-2 bg-black/80 backdrop-blur text-[#D4AF37] text-[10px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                                     {game.rating}
                                 </div>
