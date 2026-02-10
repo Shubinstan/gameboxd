@@ -43,7 +43,7 @@ export default function Home() {
         try {
           const userGames = await LibraryService.getUserLibrary(user.uid);
 
-          const sortedGames = userGames.sort((a, b) => b.addedAt - a.addedAt);
+          const sortedGames = userGames.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0));
           setGames(sortedGames);
         } catch (error) {
           console.error("Failed to load library:", error);

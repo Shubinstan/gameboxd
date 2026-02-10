@@ -379,7 +379,7 @@ const gameToAdd = { ...newGame, status: statusToAdd };
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5 text-neutral-300">
-                                    {stats.collection.sort((a, b) => b.addedAt - a.addedAt).map((game) => (
+                                    {stats.collection.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0)).map((game) => (
                                         <tr key={game.id} onClick={() => setSelectedGame(game)} className="hover:bg-white/5 transition-colors cursor-pointer group">
                                             <td className="px-4 py-3 font-mono text-neutral-500 text-xs whitespace-nowrap">{formatDate(game.completedAt || game.addedAt)}</td>
                                             <td className="px-4 py-3 flex items-center gap-3">
