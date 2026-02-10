@@ -12,7 +12,7 @@ import {
 import { Navbar } from '@/components/layout/Navbar';
 import { useAuth } from '@/features/auth/AuthContext';
 import { LibraryService } from '@/features/library/LibraryService';
-import { Game } from '@/interfaces';
+import { Game, GameStatus } from '@/interfaces';
 import { GameDetailsModal } from '@/components/game/GameDetailsModal';
 import { updateProfile } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore'; 
@@ -182,8 +182,8 @@ export default function ProfilePage() {
 
   const handleAddGame = async (newGame: Game) => {
     if (!user) return;
-    const statusToAdd = searchContext === 'wishlist' ? 'BACKLOG' : 'PLAYING';
-    const gameToAdd = { ...newGame, status: statusToAdd };
+const statusToAdd = (searchContext === 'wishlist' ? 'BACKLOG' : 'PLAYING') as GameStatus;
+const gameToAdd = { ...newGame, status: statusToAdd };
     setGames(prev => [gameToAdd, ...prev]);
     await LibraryService.addGame(user.uid, gameToAdd);
   };
