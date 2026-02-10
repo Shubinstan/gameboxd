@@ -391,7 +391,7 @@ const gameToAdd = { ...newGame, status: statusToAdd };
                                             </td>
                                             <td className="px-4 py-3 text-xs text-neutral-400">{normalizePlatform(game.playedOn || game.platform || '')}</td>
                                             <td className="px-4 py-3 text-right">
-                                                {game.rating > 0 && (<div className="flex justify-end text-[#D4AF37] gap-0.5 items-center"><Star className="w-3 h-3 fill-current" /><span className="text-xs font-bold ml-1">{game.rating}</span></div>)}
+                                                {(game.rating || 0) > 0 && (<div className="flex justify-end text-[#D4AF37] gap-0.5 items-center"><Star className="w-3 h-3 fill-current" /><span className="text-xs font-bold ml-1">{game.rating}</span></div>)}
                                             </td>
                                         </tr>
                                     ))}
