@@ -118,12 +118,13 @@ export default function ProfilePage() {
     }).length;
     const favorites = [...collection].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
     const ratingsDist = Array(10).fill(0);
-    collection.forEach(g => {
-        if (g.rating > 0) {
-            const index = Math.ceil(g.rating * 2) - 1;
-            if (index >= 0 && index < 10) ratingsDist[index]++;
-        }
-    });
+collection.forEach(g => {
+     const r = g.rating || 0; 
+     if (r > 0) {
+         const index = Math.ceil(r * 2) - 1;
+         if (index >= 0 && index < 10) ratingsDist[index]++;
+     }
+});
     const maxRatingCount = Math.max(...ratingsDist, 1);
     const platforms: Record<string, number> = {};
     collection.forEach(g => {
