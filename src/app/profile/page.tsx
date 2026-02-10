@@ -1,7 +1,6 @@
 'use client';
 
-
-import { useState, useEffect, useMemo } from 'react';
+import { Suspense, useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { 
@@ -19,7 +18,6 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
 import { SearchModal } from '@/components/search/SearchModal';
 import { EditProfileModal } from '@/components/profile/EditProfileModal'; 
-
 
 const formatDate = (dateString?: string | number) => {
     if (!dateString) return 'Unknown Date';
@@ -41,8 +39,8 @@ type TabType = 'profile' | 'activity' | 'wishlist' | 'reviews';
 const TABS: TabType[] = ['profile', 'activity', 'wishlist', 'reviews'];
 const AVATAR_STYLES = ['notionists', 'pixel-art', 'bottts', 'avataaars'];
 
-export default function ProfilePage() {
- 
+
+function ProfileContent() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -61,7 +59,6 @@ export default function ProfilePage() {
 
   const initialTab = searchParams.get('tab') as TabType | null;
   const [activeTab, setActiveTab] = useState<TabType>(initialTab && TABS.includes(initialTab) ? initialTab : 'profile');
-
   
    useEffect(() => {
     const tabFromUrl = searchParams.get('tab');
@@ -118,13 +115,13 @@ export default function ProfilePage() {
     }).length;
     const favorites = [...collection].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
     const ratingsDist = Array(10).fill(0);
-collection.forEach(g => {
-     const r = g.rating || 0; 
-     if (r > 0) {
-         const index = Math.ceil(r * 2) - 1;
-         if (index >= 0 && index < 10) ratingsDist[index]++;
-     }
-});
+    collection.forEach(g => {
+         const r = g.rating || 0; 
+         if (r > 0) {
+             const index = Math.ceil(r * 2) - 1;
+             if (index >= 0 && index < 10) ratingsDist[index]++;
+         }
+    });
     const maxRatingCount = Math.max(...ratingsDist, 1);
     const platforms: Record<string, number> = {};
     collection.forEach(g => {
@@ -183,8 +180,8 @@ collection.forEach(g => {
 
   const handleAddGame = async (newGame: Game) => {
     if (!user) return;
-const statusToAdd = (searchContext === 'wishlist' ? 'BACKLOG' : 'PLAYING') as GameStatus;
-const gameToAdd = { ...newGame, status: statusToAdd };
+    const statusToAdd = (searchContext === 'wishlist' ? 'BACKLOG' : 'PLAYING') as GameStatus;
+    const gameToAdd = { ...newGame, status: statusToAdd };
     setGames(prev => [gameToAdd, ...prev]);
     await LibraryService.addGame(user.uid, gameToAdd);
   };
@@ -352,16 +349,16 @@ const gameToAdd = { ...newGame, status: statusToAdd };
                                      </div>
                                  </div>
                              ))}
-                         </div>
-                     ) : (
-                         <div className="flex flex-col items-center justify-center py-10 md:py-20 text-neutral-500 border-2 border-dashed border-white/10 rounded-lg bg-white/[0.02]">
-                             <Bookmark className="w-10 h-10 md:w-12 md:h-12 mb-4 opacity-20 text-white" />
-                             <h4 className="text-base md:text-lg font-bold text-white mb-2">Wishlist is empty</h4>
-                             <button onClick={() => openSearch('wishlist')} className="flex items-center gap-2 bg-[#D4AF37] hover:bg-[#FCD34D] text-black font-bold py-3 px-6 rounded-md uppercase tracking-widest text-xs transition-transform hover:scale-105 shadow-lg shadow-[#D4AF37]/20">
-                                 <Search className="w-4 h-4" /> Find a Game
-                             </button>
-                         </div>
-                     )}
+                          </div>
+                      ) : (
+                          <div className="flex flex-col items-center justify-center py-10 md:py-20 text-neutral-500 border-2 border-dashed border-white/10 rounded-lg bg-white/[0.02]">
+                              <Bookmark className="w-10 h-10 md:w-12 md:h-12 mb-4 opacity-20 text-white" />
+                              <h4 className="text-base md:text-lg font-bold text-white mb-2">Wishlist is empty</h4>
+                              <button onClick={() => openSearch('wishlist')} className="flex items-center gap-2 bg-[#D4AF37] hover:bg-[#FCD34D] text-black font-bold py-3 px-6 rounded-md uppercase tracking-widest text-xs transition-transform hover:scale-105 shadow-lg shadow-[#D4AF37]/20">
+                                  <Search className="w-4 h-4" /> Find a Game
+                              </button>
+                          </div>
+                      )}
                  </section>
                 )}
                 
@@ -460,5 +457,14 @@ const gameToAdd = { ...newGame, status: statusToAdd };
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onAddGame={handleAddGame} />
       <EditProfileModal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)} currentName={user.displayName || ''} currentLocation={location} onUpdate={handleProfileUpdate} />
     </div>
+  );
+}
+
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#121212] flex items-center justify-center text-[#D4AF37]">Loading profile...</div>}>
+      <ProfileContent />
+    </Suspense>
   );
 }
