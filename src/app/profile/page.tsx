@@ -12,7 +12,7 @@ import {
 import { Navbar } from '@/components/layout/Navbar';
 import { useAuth } from '@/features/auth/AuthContext';
 import { LibraryService } from '@/features/library/LibraryService';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 import { GameDetailsModal } from '@/components/game/GameDetailsModal';
 import { updateProfile } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore'; 

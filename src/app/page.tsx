@@ -9,7 +9,7 @@ import { LibraryGrid } from '@/components/library/LibraryGrid';
 import { LandingPage } from '@/components/landing/LandingPage';
 import { useAuth } from '@/features/auth/AuthContext';
 import { LibraryService } from '@/features/library/LibraryService';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 
 // LAZY LOADING MODALS
 const SearchModal = dynamic(() => import('@/components/search/SearchModal').then(mod => mod.SearchModal), {

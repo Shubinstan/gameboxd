@@ -9,7 +9,7 @@ import {
   getDocs 
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 
 
 const COLLECTION_NAME = 'games';

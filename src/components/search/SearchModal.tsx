@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X, Search, Loader2, Plus, Check, ArrowLeft, Gamepad2 } from 'lucide-react';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 import { GameCard } from '@/components/game/GameCard';
 
 interface SearchModalProps {

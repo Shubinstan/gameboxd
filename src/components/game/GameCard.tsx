@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { Star, Gamepad2, Clock, CheckCircle2, XCircle } from 'lucide-react';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 import { cn } from '@/lib/utils';
 
 // Configuration for status icons and colors

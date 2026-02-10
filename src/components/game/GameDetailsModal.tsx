@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X, Star, Trash2, Save, Calendar, Monitor, Edit3 } from 'lucide-react';
-import { Game, GameStatus } from '@/types';
+import { Game, GameStatus } from '@/interfaces';
 import { cn } from '@/lib/utils';
 import { GameCard } from './GameCard';
 

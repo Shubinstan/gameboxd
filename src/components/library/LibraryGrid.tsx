@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Search, Plus, Calendar, Star, Type } from 'lucide-react';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 import { GameCard } from '@/components/game/GameCard';
 import { cn } from '@/lib/utils';
 

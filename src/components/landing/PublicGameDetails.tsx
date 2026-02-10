@@ -2,7 +2,7 @@
 
 import { X, Calendar, Monitor, Globe, Star, Award, Building2 } from 'lucide-react';
 import Image from 'next/image';
-import { Game } from '@/types';
+import { Game } from '@/interfaces';
 
 
 export interface LandingGame extends Game {
