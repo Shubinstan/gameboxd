@@ -58,7 +58,7 @@ export function GameDetailsModal({ game, isOpen, onClose, onUpdate, onDelete }: 
   };
 
   return (
-    // 1. Full screen wrap (Centring)
+    // 1. Full screen wrap (Centering)
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       
       {/* Backdrop */}
@@ -79,11 +79,17 @@ export function GameDetailsModal({ game, isOpen, onClose, onUpdate, onDelete }: 
         </button>
 
         {/* === LEFT COLUMN === */}
+        {/* shrink-0 prevents it from being squashed, md:h-full allows scrolling if needed */}
         <div className="w-full md:w-1/3 bg-black/40 flex flex-col items-center p-6 border-b md:border-b-0 md:border-r border-white/5 overflow-y-auto custom-scrollbar shrink-0">
-            <div className="w-[160px] md:w-[220px] shadow-2xl mb-6 mt-4">
-                <GameCard game={{ ...game, rating: hoverRating || rating, status, playedOn }} disabled />
+            {/* Visual Game Card (Non-interactive) */}
+            <div className="w-[160px] md:w-[220px] shadow-2xl mb-6 mt-4 pointer-events-none block">
+                <GameCard 
+                    // We construct a temporary game object to preview changes
+                    game={{ ...game, rating: hoverRating || rating, status, playedOn }} 
+                />
             </div>
             
+            {/* Platform Selector */}
             <div className="w-full max-w-[240px] space-y-2">
                 <label className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em] flex items-center gap-2">
                     <Monitor className="w-3 h-3" /> Played On
@@ -105,11 +111,10 @@ export function GameDetailsModal({ game, isOpen, onClose, onUpdate, onDelete }: 
         </div>
 
         {/* === RIGHT COLUMN (Flex Container) === */}
-        
-        <div className="w-full md:w-2/3 flex flex-col h-full bg-[#0F0F0F] relative">
+        {/* flex-1 and min-h-0 are crucial for scrolling to work properly inside flex children */}
+        <div className="flex-1 flex flex-col min-h-0 bg-[#0F0F0F] relative">
             
             {/* 3. SCROLLABLE AREA (Content) */}
-            
             <div className="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8">
                 
                 {/* Header */}
@@ -228,6 +233,7 @@ export function GameDetailsModal({ game, isOpen, onClose, onUpdate, onDelete }: 
             </div>
 
             {/* 4. FOOTER */}
+            {/* Sticky at the bottom of the right column */}
             <div className="p-5 md:px-8 border-t border-white/10 bg-[#0F0F0F] flex items-center justify-between shrink-0 z-20">
                 <button onClick={handleDelete} className="text-red-500/60 hover:text-red-400 font-bold text-[10px] tracking-wider px-3 py-2 flex items-center gap-2 hover:bg-red-500/10 rounded transition-colors whitespace-nowrap">
                   <Trash2 className="w-4 h-4" /> 

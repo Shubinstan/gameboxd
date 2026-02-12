@@ -59,7 +59,6 @@ export default function Home() {
 
   // FILTER: SHOW ONLY ACTIVE GAMES (Change this if you want to see Backlog here too)
   const collectionGames = useMemo(() => {
-
       return games.filter(g => g.status !== 'BACKLOG' && g.status !== 'DROPPED');
   }, [games]);
 
@@ -67,22 +66,18 @@ export default function Home() {
   const handleAddGame = async (newGame: Game) => {
     if (!user) return;
     
-
     const gameToAdd: Game = { 
         ...newGame, 
         status: 'PLAYING', 
         addedAt: Date.now() 
     };
     
-    
     setGames(prev => [gameToAdd, ...prev]);
-    
     
     try {
         await LibraryService.addGame(user.uid, gameToAdd);
     } catch (error) {
         console.error("Failed to save game", error);
-        
         setGames(prev => prev.filter(g => g.id !== gameToAdd.id));
     }
   };
@@ -136,9 +131,11 @@ export default function Home() {
                     
                     <div className="flex items-center gap-2 md:gap-4 text-neutral-500 font-rajdhani text-xs md:text-lg mt-3 transition-all duration-300 peer-hover:translate-x-2 peer-hover:text-[#D4AF37]">
                         <span className="text-[#D4AF37]">///</span>
-                        <span className="whitespace-nowrap">SYSTEM STATUS: ONLINE</span>
+                        
+                        <span className="whitespace-nowrap font-bold">TOTAL ENTRIES: <span className="text-white">{collectionGames.length}</span></span>
+                        
                         <span className="w-1 h-1 bg-neutral-600 rounded-full hidden sm:inline" />
-                        <span className="hidden sm:inline">{collectionGames.length} ACTIVE ENTRIES</span>
+                        <span className="hidden sm:inline">DATABASE ACTIVE</span>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image'; 
 import { usePathname } from 'next/navigation';
@@ -15,7 +15,15 @@ export function Navbar() {
   
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // State to track if avatar image failed to load
+  const [imageError, setImageError] = useState(false);
+
+  // Reset error state when user changes
+  useEffect(() => {
+    setImageError(false);
+  }, [user?.photoURL]);
 
   const openAuth = (view: 'login' | 'register') => {
       setAuthView(view);
@@ -105,18 +113,27 @@ export function Navbar() {
                             href="/profile"
                             className="flex items-center gap-2 md:gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#D4AF37]/50 rounded-full pl-1 md:pl-2 pr-2 md:pr-4 py-1 transition-all duration-300 hover:scale-105 group"
                         >
-                            <div className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden border border-white/20 bg-neutral-800">
-                                {user.photoURL ? (
+                            {/* AVATAR CONTAINER */}
+                            <div className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden border border-white/20 bg-neutral-800 flex items-center justify-center">
+                                {user.photoURL && !imageError ? (
                                     <Image 
                                         src={user.photoURL} 
                                         alt="User" 
                                         fill 
                                         className="object-cover"
                                         sizes="32px"
+                                        onError={() => setImageError(true)}
+                                        referrerPolicy="no-referrer"
+                                        unoptimized
                                     />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <UserIcon className="w-4 h-4 text-neutral-400" />
+                                    // Fallback: Show Initials or Icon if image fails/missing
+                                    <div className="w-full h-full flex items-center justify-center bg-neutral-800 text-neutral-300">
+                                        {user.displayName ? (
+                                            <span className="text-xs md:text-sm font-bold">{user.displayName[0].toUpperCase()}</span>
+                                        ) : (
+                                            <UserIcon className="w-4 h-4" />
+                                        )}
                                     </div>
                                 )}
                             </div>
